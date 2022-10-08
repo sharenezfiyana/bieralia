@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Bieralia.ViewModels
+@model BookViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+    if(Context.Session.GetString("Username") == null)
+    {
+        Layout = "_Layout";
+    }
+    else
+    {
+        Layout = "_LayoutAdmin";
+    }
+}
+<section class="home">
+    <div class="container">
+        <br />
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search Book by Title" aria-label="Search" name="Search"/>
+            <button class="btn btn-search-admin" type="submit">Search</button>
+        </form>
+        <br /><br />
+        <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-5">
+            @foreach (var item in Model.BookList){
+            <div class="col">
+                <div class="card">
+                    <div class="p-3">
+                        <img src="~/images/@item.Image" height="280" class="card-img-top" alt="..." />
+                    </div>
+                    <div class="card-body book-view-admin">
+                        <h5 style="font-size: 1em" class="card-title">@item.BookTitle</h5>
+                       
+                        <h6 style="font-size: 1em" class="book-id">Price : Rp @item.Price</h6>
+                        <h6 style="font-size: 0.7em" class="book-id">BookId : @item.BookID</h6>
+                        <h6 style="font-size: 0.7em" class="book-id">Quantity : @item.Quantity</h6>
+                    </div>
+                    <div style="background-color: #984c9c" class="card-footer">
+                        <small style="font-size: 0.7em; color: white !important">Author : @item.Author</small>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</section>

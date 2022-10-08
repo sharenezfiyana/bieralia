@@ -1,0 +1,153 @@
+﻿@using Microsoft.AspNetCore.Http
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    if(Context.Session.GetString("Username") == null)
+    {
+        Layout = "_Layout";
+    }
+    else
+    {
+        Layout = "_LayoutAdmin";
+    }
+}
+
+<div class="bg-color">
+    <div class="container d-grid" style="height: 100vh; place-content: center">
+        <div class="wrapper-register">
+            <div class="img-register float-md-start">
+                <img src="~/asset/bookbgregister.jpg" height="700" alt="" />
+            </div>
+            <form id="login-form" class="form-register float-md-end needs-validation" novalidate>
+                <div class="mb-3 row form-group">
+                    <label for="email" class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10">
+                        <input name="Email" type="text" class="form-control" id="email" required />
+                    </div>
+                </div>
+                <div class="mb-3 row form-group">
+                    <label for="inputUsername" class="col-sm-2 col-form-label">Username</label>
+                    <div class="col-sm-10">
+                        <input name="Username" type="text" class="form-control" id="inputUsername" required />
+                    </div>
+                </div>
+                <div class="mb-3 row form-group">
+                    <label for="inputUsername" class="col-sm-2 col-form-label">Phone Number</label>
+                    <div class="col-sm-10">
+                        <input name="PhoneNumber" type="tel" class="form-control" id="inputTel" required />
+                    </div>
+                </div>
+                <div class="mb-3 row form-group">
+                    <label for="birthday" class="col-sm-2 col-form-label">Date of Birth: </label>
+                    <div class="col-sm-10">
+                        <input name="DOB" type="date" id="birthday"required />
+                    </div>
+                </div>
+                <div class="mb-3 row form-group">
+                    <label for="inputAddress" class="col-sm-2 col-form-label">Address</label>
+                    <div class="col-sm-10">
+                        <input name="Address" type="text" class="form-control" id="inputAddress" required />
+                    </div>
+                </div>
+                <div class="mb-3 row form-group">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-10">
+                        <input  name="Password" type="password" class="form-control" id="inputPassword" required />
+                    </div>
+                </div>
+
+                <br />
+                <a href="#" id="submit-register" class="btn btn-color-register" role="button">Register</a>
+                <br /><br />
+                <a class="login-here" href="./Login">Already have an account? <span style="color: #984c9c; font-weight: bold">Login here!</span> </a>
+            </form>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        async function RegisterUser(UserData) {
+            console.log(UserData)
+            const response = await fetch("../User/RegisterUser",
+                {
+                    method: "POST",
+                    body: UserData
+                }
+            );
+            const data = await response.json();
+            return data;
+        }
+
+        function validate(){
+            var name = document.getElementById("inputUsername").value;
+            var email = document.getElementById("email").value;
+            var phone = document.getElementById("inputTel").value;
+            var birthday = document.getElementById("birthday").value;
+            var password = document.getElementById("inputPassword").value;
+            var address = document.getElementById("inputAddress").value;
+            var regEmail = /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;
+            var regPhone = /^\d{8,13}$/;
+            var regName = /\d+$/g;
+
+            if (name == "" || regName.test(name)) {
+                window.alert("Please enter your name properly.");
+                name.focus();
+                return false;
+            }
+
+            if (address == "") {
+                window.alert("Please enter your address.");
+                address.focus();
+                return false;
+            }
+
+            if (email == "" || !regEmail.test(email)) {
+                window.alert("Please enter a valid e-mail address.");
+                email.focus();
+                return false;
+            }
+
+            if (password == "") {
+                alert("Please enter your password");
+                password.focus();
+                return false;
+            }
+
+            if (password.length < 6) {
+                alert("Password should be atleast 6 character long");
+                password.focus();
+                return false;
+            }
+            if (birthday == "") {
+                alert("Please enter your DOB");
+                birthday.focus();
+                return false;
+            }
+            if (phone == "" || !regPhone.test(phone)) {
+                alert("Please enter valid phone number.");
+                phone.focus();
+                return false;
+            }
+            return true;
+        }
+
+        document.getElementById("submit-register").addEventListener("click", async function (e) {
+
+            e.preventDefault();
+
+            if(validate()){
+                let myForm = document.getElementById('login-form');
+                let formData = new FormData(myForm);
+                const ret = await RegisterUser(formData);
+
+                if (ret.status == false) {
+                    alert(ret.message)
+                } else {
+                    alert("Account created")
+                    window.location.href = '@Url.Action("Login", "User")'
+                }
+            }
+        });
+    </script>
+}

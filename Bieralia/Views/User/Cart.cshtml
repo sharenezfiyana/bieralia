@@ -1,0 +1,84 @@
+﻿@using Microsoft.AspNetCore.Http
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_LoginLayout";
+    List<CartModel> cart = Context.Session.GetObject<List<CartModel>>("cart");
+    cart.Reverse();
+    int totalPrice = 0;
+    int totalAllPrice = 0;
+}
+
+<div class="container">
+    <br />
+    <div class="wrapper-cart">
+        @if(cart.Count() != 0)
+        {
+            @foreach(CartModel book in cart)
+            {
+            <div class="card mb-3" style="max-height: 240px">
+                <div class="row g-0">
+                    <div class="col-md-1 p-2">
+                        <img src="~/images/@book.Image" class="img-fluid rounded-start" alt="..." />
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body cart-title">
+                            <h5 style="font-size: 1.2em" class="card-title">@book.BookTitle</h5>
+                            <p style="font-size: 1em" class="card-text">Rp @book.Price / book</p>
+                            <p style="font-size: 1em" class="card-text">Quantity : @book.Quantity</p>
+                             @{
+                           totalPrice = book.Price * book.Quantity;
+                            }
+                            <p style="font-size: 1em" class="card-text">Total : @totalPrice</p>
+                        </div>
+                    </div>
+                </div>
+                @{
+                    totalAllPrice += totalPrice;
+                }
+            </div>
+            }
+            <p style="font-size: 1em; font-weight:bold" class="card-text">Pembayaran Nomor Rekening BCA : 60312931 (PT. Bieralia Indonesia)</p>
+            <div class="button-checkout d-flex justify-content-between align-items-center">
+                <span style="font-size: 1em; font-weight:bold" class="card-text">Total Price : Rp @totalAllPrice</span>
+
+                <button id="checkout" type="submit" class="btn btn-primary btn-checkout">Checkout</button>
+            </div>
+        }
+        else
+        {
+            <div>
+                <span>Your Cart is Empty!!!</span>
+            </div>
+        }
+
+        
+        
+    </div>
+</div>
+
+@section scripts {
+    <script>
+
+        async function Checkout() {
+
+            const response = await fetch("../User/Checkout",
+                {
+                    method: "POST"
+                }
+            );
+            const data = await response.json();
+            return data;
+        }
+
+        document.getElementById("checkout").addEventListener("click", async function(){
+            const ret = await Checkout()
+
+            alert(ret.message)
+
+            window.location.href = '@Url.Action("History", "User")'
+        })
+
+    </script>
+}

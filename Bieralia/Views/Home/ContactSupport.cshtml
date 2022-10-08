@@ -1,0 +1,86 @@
+﻿@using Microsoft.AspNetCore.Http
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Contact Support";
+    if(Context.Session.GetString("Username") == null)
+    {
+        Layout = "_Layout";
+    }
+    else
+    {
+        Layout = "_LoginLayout";
+    }
+}
+<div class="contact-supp">
+    <div class="container">
+        <div class="support">
+            <br /><br />
+            <h2 style="color: #984c9c">How Can We Help?</h2>
+
+            <h6>Please select a topic below related to your inquiry. If you don't find what you need, please contact us.</h6>
+            <br />
+            <img style="margin-right: 8px" src="~/asset/mail.svg" alt=""/> admin@bieralia.com <br />
+            <p>Jl. Matraman Raya No.46-50, Kb. Manggis, Kec. Matraman, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13150</p>
+        </div>
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Berapa banyak buku yang dapat dibeli?</button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">Anda dapat membeli sebanyak quantity yang masih tersedia.</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Berapa lama masa pembayaran buku?</button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">Tidak ada batasan dalam pembayaran, Anda harus mengkonfirmasi pembayaran Anda secara manual melalui whatsapp/email ke admin.</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Apakah kita dapat menukar buku yang kita beli jika ada kerusakan?</button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">Anda dapat menukar buku yang rusak atau ada halaman yang kurang. Kami akan memberikan buku yang baru.</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">Ada buku apa saja yang ada di tempat kami?</button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">Ada segala jenis buku dan majalah. Ada buku fiksi dan non-fiksi, majalah, journal, dan lain-lain yang dapat kalian pinjam.</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">Dimanakah alamat Bieralia?</button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">Jl. Matraman Raya No.46-50, Kb. Manggis, Kec. Matraman, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13150.</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">Bagaimana jika saya tidak dapat mengambil buku yang sudah saya beli?</button>
+                </h2>
+                <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">Anda bisa menghubungi admin kami dan meminta untuk melakukan pengiriman oleh kurir Bieralia kami.</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">Kapan waktu operasional Bieralia?</button>
+                </h2>
+                <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">Anda dapat mengunjungi tempat kami dari hari Senin sampai dengan Sabtu jam 10.00 hingga 18.00.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

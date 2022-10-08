@@ -1,0 +1,81 @@
+﻿@using Microsoft.AspNetCore.Http
+
+@{
+    int totalItem = Context.Session.GetObject<List<CartModel>>("cart").Count;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Bieralia</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist2/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/siteuser.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <nav class="navbar d-block navbar-expand-lg bg-light">
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index"><img src="~/asset/bieralia.png" height="70" alt="" /></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarText">
+                    <ul class="nav justify-content-start">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Index">Bieralia</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Book" asp-action="Index">Books Collection</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="User" asp-action="History">History</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ContactSupport">Contact Support</a>
+                        </li>
+                         <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="User" asp-action="Cart"><img src="~/asset/icons8-favorite-cart-48.png" height="30" alt="" />(@totalItem)</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link button-ua">Hi, @Context.Session.GetString("Username")</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+     @RenderBody()
+   @* <div class="container">
+        <main role="main" class="pb-3">
+           
+        </main>
+    </div>*@
+
+   <!-- payment -->
+    <br /><br />
+    <div class="payment border border-1 p-3">
+        <div class="container">
+            <h6>ACCEPTED PAYMENTS</h6>
+            <img src="~/asset/payment4.png" alt="" />
+        </div>
+    </div>
+    <!-- footer -->
+    <div style="background-color: rgb(238, 238, 238)" class="card-footer text-center p-3">
+        <div class="container">
+            <p style="font-size: 0.7em">Copyright &#9400; 2022 Bieralia, Inc. - All Rights Reserved.</p>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist2/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

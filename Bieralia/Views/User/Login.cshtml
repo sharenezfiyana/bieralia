@@ -1,0 +1,82 @@
+﻿@using Microsoft.AspNetCore.Http
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    if(Context.Session.GetString("Username") == null)
+    {
+        Layout = "_Layout";
+    }
+    else
+    {
+        Layout = "_LayoutAdmin";
+    }
+}
+<div class="bg-color">
+    <div class="container d-grid" style="height: 100vh; place-content: center">
+        <div class="wrapper-login">
+            <form class="form-login" id="login-form">
+                <img class="mx-auto d-block" src="~/asset/bieralia.png" height="140" alt="" />
+                <div class="mb-3 row form-group">
+                    <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+                    <input type="email" name="email" class="form-control" id="staticEmail" placeholder="email@example.com" />
+                </div>
+                <div class="mb-3 row form-group">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                    <input name="password" type="password" class="form-control" id="inputPassword" />
+                </div>
+                <a href="#" class="btn btn-color-login" id="submit-login" role="button" aria-disabled="true">Login</a>
+                <br /><br />
+                <a href="../Admin/Login" class="btn btn-color-login" role="button" aria-disabled="true">Login as Admin</a>
+                <br />  
+            </form>
+        </div>
+    </div>
+</div>
+@*<form id="login-form">
+    <div  class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    </div>
+
+    <button type="submit" id="submit-login" class="btn btn-primary">Submit</button>
+</form>
+
+<a class="btn" href="../Admin/Login">Login as admin</a>*@
+
+@section scripts {
+    <script>
+        async function LoginUser(UserData) {
+
+            const response = await fetch("../User/LogUser",
+                {
+                    method: "POST",
+                    body: UserData
+                }
+            );
+            const data = await response.json();
+            return data;
+        }
+
+        document.getElementById("submit-login").addEventListener("click", async function (e) {
+
+            e.preventDefault();
+
+            let myForm = document.getElementById('login-form');
+            let formData = new FormData(myForm);
+            const ret = await LoginUser(formData);
+
+            if (ret.status == false) {
+                alert(ret.message)
+                @{Layout = "_Layout";}
+            } else {
+                window.location.href = '@Url.Action("Index", "Home")'
+            }
+        });
+    </script>
+}

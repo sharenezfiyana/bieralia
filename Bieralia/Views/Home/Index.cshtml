@@ -1,0 +1,194 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Home Page";
+    if(Context.Session.GetString("Username") == null)
+    {
+        Layout = "_Layout";
+    }
+    else
+    {
+        Layout = "_LoginLayout";
+    }
+}
+
+<div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
+    <div class="carousel-inner slider-img">
+        <div class="carousel-item active">
+            <img src="~/asset/slider1.jpg" class="d-block w-100" alt="..." />
+        </div>
+        <div class="carousel-item">
+            <img src="~/asset/slider2.jpg" class="d-block w-100" alt="..." />
+        </div>
+        <div class="carousel-item">
+            <img src="~/asset/slider3.jpg" class="d-block w-100" alt="..." />
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+<br /><br />
+<!-- content carousel -->
+<div class="container">
+    <h5 style="font-family: 'Sriracha', cursive; font-weight: 500; font-size: 2em">Trending Reads for the Summer</h5>
+    <div id="carouselProduct" class="carousel carousel-dark slide" data-interval="false">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="d-block w-100">
+                    <div class="d-flex justify-content-evenly px-3 m-3">
+                        <div class="card card-shadow" style="width: 15%">
+                            <img src="~/asset/buku1.jpg" height="250" class="card-img-top" alt="..." />
+                        </div>
+                        <div class="card card-shadow" style="width: 15%">
+                            <img src="~/asset/buku2.jpg" height="250" class="card-img-top" alt="..." />
+                        </div>
+                        <div class="card card-shadow" style="width: 15%">
+                            <img src="~/asset/buku3.jpg" height="250" class="card-img-top" alt="..." />
+                        </div>
+                        <div class="card card-shadow" style="width: 15%">
+                            <img src="~/asset/buku4.jpg" height="250" class="card-img-top" alt="..." />
+                        </div>
+                        <div class="card card-shadow" style="width: 15%">
+                            <img src="~/asset/buku5.jpg" height="250" class="card-img-top" alt="..." />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="d-block w-100">
+                    <div class="d-flex justify-content-evenly px-3 m-3">
+                        <div class="card card-shadow" style="width: 15%">
+                            <img src="~/asset/buku6.jpg" height="250" class="card-img-top" alt="..." />
+                        </div>
+                        <div class="card card-shadow" style="width: 15%">
+                            <img src="~/asset/buku7.jpg" height="250" class="card-img-top" alt="..." />
+                        </div>
+                        <div class="card card-shadow" style="width: 15%">
+                            <img src="~/asset/buku8.jpg" height="250" class="card-img-top" alt="..." />
+                        </div>
+                        <div class="card card-shadow" style="width: 15%">
+                            <img src="~/asset/buku9.jpg" height="250" class="card-img-top" alt="..." />
+                        </div>
+                        <div class="card card-shadow" style="width: 15%">
+                            <img src="~/asset/buku10.jpg" height="250" class="card-img-top" alt="..." />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="d-block w-100">
+                    <div class="d-flex justify-content-evenly px-3 m-3">
+                        <div class="card card-shadow" style="width: 15%">
+                            <img src="~/asset/buku11.jpg" height="250" class="card-img-top" alt="..." />
+                        </div>
+                        <div class="card card-shadow" style="width: 15%">
+                            <img src="~/asset/buku12.jpg" height="250" class="card-img-top" alt="..." />
+                        </div>
+                        <div class="card card-shadow" style="width: 15%">
+                            <img src="~/asset/buku13.jpg" height="250" class="card-img-top" alt="..." />
+                        </div>
+                        <div class="card card-shadow" style="width: 15%">
+                            <img src="~/asset/buku14.jpg" height="250" class="card-img-top" alt="..." />
+                        </div>
+                        <div class="card card-shadow" style="width: 15%">
+                            <img src="~/asset/buku15.jpg" height="250" class="card-img-top" alt="..." />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" style="width: 5%" type="button" data-bs-target="#carouselProduct" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" style="width: 5%" type="button" data-bs-target="#carouselProduct" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+<!-- img -->
+<br /><br />
+<div class="container justify-content-center">
+    <img src="~/asset/explorenow.jpeg" width="1296" alt="" />
+</div>
+<!-- content -->
+<br /><br />
+<div class="container">
+    <h4 style="font-weight: 600">OUR RECOMMENDATION</h4>
+    <br />
+    <div class="row justify-content-center">
+        <div class="col-6 col-md-6 p-3 border border-1">
+            <div class="d-flex">
+                <img src="~/asset/fiction.png" width="230" alt="..." />
+                <div class="d-block p-3">
+                    <h6 style="font-weight: 600; font-size: 1em">Asian American</h6>
+                    <p style="font-size: 1em">Must-read books by Asian and Asian American authors</p>
+                    <a style="color: #984c9c" asp-area="" asp-controller="Book" asp-action="Index" >Find out more</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-6 p-3 border border-1">
+            <div class="d-flex">
+                <img src="~/asset/archi.png" width="230" alt="..." />
+                <div class="d-block p-3">
+                    <h6 style="font-weight: 600; font-size: 1em">Building</h6>
+                    <p style="font-size: 1em">Architecture books to add to your reading list</p>
+                    <a style="color: #984c9c" asp-area="" asp-controller="Book" asp-action="Index" >Find out more</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Force next columns to break to new line at md breakpoint and up -->
+        <div class="w-100 d-none d-md-block"></div>
+
+        <div class="col-6 col-md-6 p-3 border border-1">
+            <div class="d-flex">
+                <img src="~/asset/selfhelp.png" width="230" alt="..." />
+                <div class="d-block p-3">
+                    <h6 style="font-weight: 600; font-size: 1em">Emotions</h6>
+                    <p style="font-size: 1em">Get self-help books that actually help manage your emotions</p>
+                    <a style="color: #984c9c" asp-area="" asp-controller="Book" asp-action="Index">Find out more</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-6 p-3 border border-1">
+            <div class="d-flex">
+                <img src="~/asset/physcho.png" width="230" alt="..." />
+                <div class="d-block p-3">
+                    <h6 style="font-weight: 600; font-size: 1em">Mental Health</h6>
+                    <p style="font-size: 1em">Books that can help to improve your mental health</p>
+                    <a style="color: #984c9c" asp-area="" asp-controller="Book" asp-action="Index">Find out more</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-100 d-none d-md-block"></div>
+
+        <div class="col-6 col-md-6 p-3 border border-1">
+            <div class="d-flex">
+                <img src="~/asset/children.png" width="230" alt="..." />
+                <div class="d-block p-3">
+                    <h6 style="font-weight: 600; font-size: 1em">Superheroes</h6>
+                    <p style="font-size: 1em">Best books for children who love superheroes</p>
+                    <a style="color: #984c9c" asp-area="" asp-controller="Book" asp-action="Index">Find out more</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-6 p-3 border border-1">
+            <div class="d-flex">
+                <img src="~/asset/fantasy.png" width="230" alt="..." />
+                <div class="d-block p-3">
+                    <h6 style="font-weight: 600; font-size: 1em">Fantasy</h6>
+                    <p style="font-size: 1em">Bestselling fantasy mangas you should read</p>
+                    <a style="color: #984c9c" asp-area="" asp-controller="Book" asp-action="Index">Find out more</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Bieralia</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist2/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/siteadmin.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+    <header>
+       <div class="container-fluid bg-primary bg-slider-header">
+            <div id="header-slider" class="container carousel slide w-100" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <h5 class="text-center">SHOP THE NEW BOOK WITH BIERALIA</h5>
+                    </div>
+                    <div class="carousel-item">
+                        <h5 class="text-center">GET A $50 GIFT CARD WHEN YOU BUY $500</h5>
+                    </div>
+                    <div class="carousel-item">
+                        <h5 class="text-center">THE MOST COMPLETE COLLECTION IN INDONESIA</h5>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#header-slider" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon h-25" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#header-slider" data-bs-slide="next">
+                    <span class="carousel-control-next-icon h-25" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+        <nav class="navbar d-block navbar-expand-lg bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="bieralia.html"><img src="~/asset/bieralia.png" height="70" alt="" /></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarText">
+                    <ul class="nav justify-content-end">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" asp-controller="Admin" asp-action="Index">Bieralia</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Admin" asp-action="ReportAdmin">Order Reports</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Admin" asp-action="Cataloging">Cataloging Process</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link button-ua" href="#">Welcome, Admin</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link button-reglog" asp-controller="User" asp-action="Logout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    @*<footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - Bieralia - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>*@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist2/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

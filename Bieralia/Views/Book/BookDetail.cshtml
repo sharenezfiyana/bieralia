@@ -1,0 +1,142 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Bieralia.Models;
+@model BookModel;
+
+@{
+    ViewData["Title"] = "Home Page";
+    if(Context.Session.GetString("Username") == null)
+    {
+        Layout = "_Layout";
+    }
+    else
+    {
+        Layout = "_LoginLayout";
+    }
+}
+
+
+<form id="cart-form">
+    <div class="container">
+        <div class="wrapperRiwayat d-grid" style="place-content: center">
+            <div class="wrapperRiwayat-2 d-block">
+                <div class="detailRiwayat d-flex">
+                    <div class="w-25"><img style="border-radius: 6px" class="w-100" src="~/images/@Model.Image" alt="" /></div>
+                    <div class="text-detail d-block w-75">
+                        <h3 style="font-weight: 700; font-size: 1.2em">@Model.BookTitle</h3>
+                        <p style="font-size: 1em">@Model.BookDesc</p>
+                        <p style="font-size: 1em">Author : @Model.Author</p>
+                        <p style="font-size: 1em">Quantity : @Model.Quantity</p>
+                        <div style="font-weight: bold" class="price">Price : @Model.Price</div>
+                        
+                        <input name="BookID" type="hidden" value="@Model.BookID" />
+                        <input name="BookTitle" type="hidden" value="@Model.BookTitle" />
+                        <input name="BookDesc" type="hidden" value="@Model.BookDesc" />
+                        <input name="Author" type="hidden" value="@Model.Author" />
+                        <input name="Price" type="hidden" value="@Model.Price" />
+                        <input name="Image" type="hidden" value="@Model.Image" />
+                        <div class="number float-end">
+                            <label style="margin-right: 1rem" for="exampleFormControlInput1" class="form-label">Quantity Book</label>
+                            <span class="minus">-</span>
+                            <input type="text" id="Quantity" name="Quantity" value="1" readonly/>
+                            <span class="plus">+</span>
+                        </div>
+                        <br /><br />
+                        @if(Model.Quantity == 0)
+                        {
+                            <span class="text-danger float-end">This book is currently unavailable!!</span>
+                            <br />
+                        }
+                        
+                        <div class="d-grid d-md-flex justify-content-md-end">
+                            @if(Model.Quantity != 0)
+                            {
+                                <button id="add-to-cart" class="confirmOrder btn" style="padding: 8px 22px"><img src="~/asset/icons8-favorite-cart-48.png" height="30" alt="" /></button>
+                            }
+                            else
+                            {
+                                <button id="add-to-cart" class="confirmOrder btn disabled" style="padding: 8px 22px"><img src="~/asset/icons8-favorite-cart-48.png" height="30" alt="" aria-disabled="true"/></button>
+                            }
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contentDetail d-block">
+                    <br />
+                    <h6 style="color: red">*Syarat dan Ketentuan Berlaku</h6>
+                    <div class="pertanyaan" style="padding: 10px">
+                        <h6>Pertanyaan :</h6>
+                        <h6>085157781920 <img src="~/asset/icons8-whatsapp.gif" height="30" alt="" /></h6>
+                    </div>
+                    <h4>Persyaratan dan Ketentuan :</h4>
+                    <div class="syarat" style="margin-left: 35px">
+                        1. Harap membawa kartu identitas asli/KTP dan bukti telah melakukan pembelian di Bieralia.<br />
+                        2. Pembelian yang telah di proses dan telah melakukan pembayaran tidak dapat dibatalkan.<br />
+                        3. Retur / tukar hanya untuk kerusakan pabrik & mesin, bukan kerusakan karena penggunaan / tidak sesuai selera.<br />
+                        4. Produk yang dipesan harus diambil sesuai identitas pembelian ke alamat : Jl. Matraman Raya No.46-50, Kb. Manggis, Kec. Matraman, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13150<br />
+                        5. Apabila ingin melakukan pembelian, tetapi menggunakan pengiriman dari kantor kami, harap hubungi admin kami.<br />
+                    </div>
+                    <br />
+                    <h6 style="font-weight: bold">SAYA TELAH MEMBACA DAN MEMAHAMI PERSYARATAN DAN KETENTUAN PEMBELIAN DAN PENGGUNAAN YANG TERTERA DI ATAS. SAYA MENYETUJUI DAN MEMBERIKAN IZIN UNTUK TERKAIT SECARA SAH DENGAN PERSYARATAN DAN KETENTUAN TERSEBUT.</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section scripts {
+
+<script>
+
+    $(document).ready(function () {
+        $(".minus").click(function () {
+            var $input = $(this).parent().find("input");
+            var count = parseInt($input.val()) - 1;
+            count = count < 1 ? 1 : count;
+            $input.val(count);
+            $input.change();
+            return false;
+        });
+        $(".plus").click(function () {
+            var $input = $(this).parent().find("input");
+            if(parseInt($input.val()) < @Model.Quantity){
+                $input.val(parseInt($input.val()) + 1);
+                $input.change();
+            }
+            return false;
+        });
+    });
+
+    async function addtocart_query(Data) {
+
+        const response = await fetch("../User/AddToCart",
+            {
+                method: "POST",
+                body: Data
+            }
+        );
+        console.log(Data)
+        const data = await response.json();
+        return data;
+    }
+
+    document.getElementById("add-to-cart").addEventListener("click", async function (e) {
+
+        e.preventDefault();
+
+        let myForm = document.getElementById('cart-form');
+        let formData = new FormData(myForm);
+        const ret = await addtocart_query(formData);
+        alert(ret.message)
+        if(ret.status == false){
+            if(ret.message != "Not enough quantity"){
+                window.location.href = '@Url.Action("Login", "User")'
+            }
+        }
+        window.location.reload();
+    });
+
+</script>
+
+
+}

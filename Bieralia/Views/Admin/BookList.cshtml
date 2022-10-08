@@ -1,0 +1,28 @@
+﻿@using Bieralia.ViewModels;
+@model BookViewModel;
+@{
+    Layout = null;
+}
+@foreach (var item in Model.BookList){
+<div class="col">
+    <div class="card h-100">
+        <div class="card-img-top" style="height:200px; width:100%">
+            <img src="~/images/@item.Image" class="d-block mx-auto h-100" alt="..." />
+        </div>
+        
+        <div class="card-body book-view-admin">
+            <h5 class="card-title">@item.BookTitle</h5>
+            <p style="text-align:justify" class="card-text">@item.BookDesc</p>
+            <h6 class="book-id">BookId : @item.BookID</h6>
+            <h6 class="book-id">Quantity : @item.Quantity</h6>
+            <h6 class="book-id">Price : @item.Price</h6>
+        </div>
+        <div class="card-footer">
+            <small class="text-muted">@item.Author</small>
+        </div>
+            <div style="padding: 10px" class="col-12">
+                <button onclick="deleteBook(@item.BookID)" class="btn btn-report-submit-delete" type="submit">Delete Book</button>
+            </div>
+    </div>
+</div>
+} 

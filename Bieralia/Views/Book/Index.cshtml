@@ -1,0 +1,67 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Bieralia.ViewModels;
+@model BookViewModel;
+
+@{
+    ViewData["Title"] = "Home Page";
+    if(Context.Session.GetString("Username") == null)
+    {
+        Layout = "_Layout";
+    }
+    else
+    {
+        Layout = "_LoginLayout";
+    }
+}
+<section class="home">
+    <div class="container">
+        <br />
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search by Book Title" aria-label="Search" name="Search"/>
+            <button class="btn btn-search-user" type="submit">Search</button>
+        </form>
+        <br /><br />
+    </div>
+    <img class="w-100" src="~/asset/bestbooks.jpg" alt="" />
+    <br />
+    <div class="container">
+        <br />
+        <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-5">
+            @foreach (var item in Model.BookList){
+                 <div class="col">
+                    <div class="card card-hover">
+                        <a style="text-decoration: none" href="./Book/BookDetail?ID=@item.BookID">
+                            <div class="p-3">
+                                <img src="~/images/@item.Image" height="280" class="card-img-top" alt="..." />
+                            </div>
+                            <div class="card-body book-view-user">
+                                <h5 style="font-size: 1em" class="card-title">@item.BookTitle</h5>
+                                <br>
+                                <h6 style="font-size: 0.9em; color: black" class="book-id">Price : Rp @item.Price</h6>
+                            </div>
+                            <div style="background-color: #984c9c" class="card-footer">
+                                <small style="font-size: 0.7em; color: white !important">@item.Author</small>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+@*@foreach (var item in Model.BookList){
+<a class="col" href="./Book/BookDetail?ID=@item.BookID">
+    <div class="card h-100">
+        <img src="~/images/@item.Image" width="150" height="350" class="card-img-top" alt="..." />
+        <div class="card-body book-view-admin">
+            <h5 class="card-title">@item.BookTitle</h5>
+            <p class="card-text">@item.BookDesc</p>
+            <h6 class="book-id">BookId : @item.BookID</h6>
+            <h6 class="book-id">Quantity : @item.Quantity</h6
+        </div>
+        <div class="card-footer">
+            <small class="text-muted">@item.Author</small>
+        </div>
+    </div>
+</a>
+} *@

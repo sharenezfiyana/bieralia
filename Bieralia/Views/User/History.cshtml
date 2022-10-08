@@ -1,0 +1,79 @@
+﻿@using Microsoft.AspNetCore.Http
+@model TransactionListViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_LoginLayout";
+}
+
+<div class="container">
+    @if(Model.TransactionList.Count() == 0){
+        <br />
+        <div class="wrapper-cart">
+            <span>Your Cart is Empty!!!</span>
+        </div>
+    }
+    @foreach(var tl in Model.TransactionList)
+    {
+        <br />
+        <div class="wrapper-cart">
+            <h5>@tl.Transaction.TransactionID</h5>
+            @{
+                int totalPrice = 0;
+                int totalAllPrice = 0;
+            }
+            @foreach(var t in @tl.TransactionDetailList)
+            {
+                <div class="card mb-3" style="max-height: 240px">
+                    <div class="row g-0">
+                        <div class="col-md-1 p-2">
+                            <img src="~/images/@t.Book.Image" class="img-fluid rounded-start" alt="..." />
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body cart-title">
+                                <h5 style="font-size: 1.2em" class="card-title">@t.Book.BookTitle</h5>
+                                <p style="font-size: 1em" class="card-text">Rp @t.Book.Price / book</p>
+                                <p style="font-size: 1em" class="card-text">Quantity : @t.TransactionDetail.Quantity</p>
+                                 @{
+                               totalPrice = t.Book.Price * t.TransactionDetail.Quantity;
+                                }
+                                <p style="font-size: 1em" class="card-text">Total : @totalPrice</p>
+                            </div>
+                        </div>
+                    </div>
+                    @{
+                        totalAllPrice += totalPrice;
+                    }
+                </div>
+            }
+        
+            <div class="button-checkout d-flex justify-content-between align-items-center">
+                <span style="font-size: 1em; font-weight:bold" class="card-text">Total Price : Rp @totalAllPrice</span>
+                <span>@tl.Transaction.Status</span>
+            </div>
+        </div>
+    }
+</div>
+@*<div class="container">
+    <div class="wrapper-cart">
+        <div class="card mb-3" style="max-height: 240px">
+            <div class="row g-0">
+                <div class="col-md-1 p-2">
+                    <img src="~/asset/buku.jpg" class="img-fluid rounded-start" alt="..." />
+                </div>
+                <div class="col-md-8 p-3">
+                    <div class="card-body cart-title">
+                        <h5 style="font-size: 1.2em" class="card-title">Card title Card titleCard titleCard titleard title Card titleCard titleCard titleard title Card titleCard titleCard titleard title Card titleCard titleCard title</h5>
+                        <p style="font-size: 1em" class="card-text">Price</p>
+                        <p style="font-size: 1em" class="card-text">Quantity : 1</p>
+                    </div>
+                    <br />
+                    <div class="button-checkout">
+                        <button type="button" class="btn btn-primary btn-checkout">Status : Unpaid</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@

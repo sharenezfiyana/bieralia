@@ -1,0 +1,313 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Bieralia.ViewModels
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    if(Context.Session.GetString("Username") == null)
+    {
+        Layout = "_Layout";
+    }
+    else
+    {
+        Layout = "_LayoutAdmin";
+    }
+}
+<div class="container">
+    <br />
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="insert-tab" data-bs-toggle="tab" data-bs-target="#insert" type="button" role="tab" aria-controls="insert" aria-selected="true">Insert Book</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="delete-tab" data-bs-toggle="tab" data-bs-target="#delete" type="button" role="tab" aria-controls="delete" aria-selected="false">Delete Book</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="update-tab" data-bs-toggle="tab" data-bs-target="#update" type="button" role="tab" aria-controls="update" aria-selected="false">Update Book</button>
+        </li>
+    </ul>
+
+    <!-- Insert Book -->
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="insert" role="tabpanel" aria-labelledby="insert-tab">
+            <br />
+            <form id="login-form" class="row g-3 needs-validation" novalidate>
+                <div class="tab-pane fade show active" id="insert-tab-pane" role="tabpanel" aria-labelledby="insert-tab" tabindex="0">
+                    <div class="container">
+                        <div class="mb-3 form-group">
+                            <label for="validationCustom01" class="form-label">Book Title</label>
+                            <input style="text-align: left" type="text" name="BookTitle" class="form-control" id="validationCustom01" placeholder="Enter your Book Title" required />
+                            <div class="valid-feedback">OK!</div>
+                        </div>
+                        <div class="mb-3 form-group">
+                            <label for="validationCustom02" class="form-label">Book Description</label>
+                            <textarea class="form-control"  name="BookDesc" id="validationCustom02" rows="3" required></textarea>
+                            <div class="valid-feedback">OK!</div>
+                        </div>
+                        <div class="mb-3 form-group">
+                            <label for="validationCustom01" class="form-label">Book Author</label>
+                            <input style="text-align: left" type="text" name="Author" class="form-control" id="validationCustom01" placeholder="Enter your Book Author" required />
+                            <div class="valid-feedback">OK!</div>
+                        </div>
+                        <div class="mb-3 form-group">
+                            <label for="validationCustom01" class="form-label">Book Price</label>
+                            <input style="text-align: left" type="number" name="Price" class="form-control" id="validationCustom01" placeholder="Enter Price" required />
+                            <div class="valid-feedback">OK!</div>
+                        </div>
+                        <div class="row g-2 form-group">
+                            <div class="col-md-6 float-start">
+                                <div class="input-group mb-3">
+                                    <input type="file" class="form-control" accept="image/*" name="Image" id="inputGroupFile02 validationCustom03" required />
+                                    <label class="input-group-text" for="validationCustom03">Upload Book Photo</label>
+                                    <div class="valid-feedback">OK!</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <div class="number float-end">
+                                    <label style="margin-right: 1rem" for="exampleFormControlInput1" class="form-label">Quantity Book</label>
+                                    <span class="minus">-</span>
+                                    <input type="text" name="Quantity" value="1" />
+                                    <span class="plus">+</span>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="col-12">
+                            <button class="btn btn-report-submit" id="submit-book" type="submit">Insert Book Now!</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- DeleteBook -->
+        <div class="tab-pane fade" id="delete" role="tabpanel" aria-labelledby="delete-tab">
+            <br />
+            <div id="remove" class="row row-cols-1 row-cols-md-3 g-4">
+                
+            </div>
+        </div>
+        <!-- UpdateBook -->
+        <div class="tab-pane fade" id="update" role="tabpanel" aria-labelledby="update-tab">
+            <br />
+            <form id="searchedId" class="d-flex" role="search">
+                <input id="bookId" name="bookId" class="form-control me-2" type="search" placeholder="Search Book by BookID" aria-label="Search by BookID" />
+                <button id="searchbookid" class="btn btn-search-admin" type="submit">Search</button>
+            </form>
+            <br />
+            <form id="updateForm" class="row g-3 needs-validation" novalidate>
+                <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                    <div class="container">
+                        <input id="bookid" name="bookid" value="" type="hidden"/>
+                        <div class="mb-3">
+                            <label for="validationCustom01" class="form-label">Book Title</label>
+                            <input name="title" style="text-align: left" type="text" class="form-control" id="validationCustom01 title" value="" required disabled />
+                            <div class="valid-feedback">OK!</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="validationCustom02" class="form-label">Book Description</label>
+                            <textarea name="desc" class="form-control" id="validationCustom02 desc" rows="3" value="" required disabled></textarea>
+                            <div class="valid-feedback">OK!</div>
+                        </div>
+                        <div class="mb-3 form-group">
+                            <label for="validationCustom01" class="form-label">Book Price</label>
+                            <input id="price" style="text-align: left" type="number" name="price" class="form-control"  placeholder="Enter Price" required disabled/>
+                            <div class="valid-feedback">OK!</div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <div class="number float-end">
+                                    <label style="margin-right: 1rem" for="exampleFormControlInput1" class="form-label">Quantity Book</label>
+                                    <span class="minus">-</span>
+                                    <input id="qty" name="qty" type="text" value="" disabled/>
+                                    <span class="plus">+</span>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="col-12">
+                            <button id="update-book" class="btn btn-report-submit" type="submit" disabled>Update Book Now!</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+
+        async function BookById(bookId){
+
+            const response = await fetch("../Admin/GetBookByBookId",
+                {
+                    method: "POST",
+                    body: bookId
+                }
+            )
+            const data = await response.json();
+            return data;
+
+        }
+
+        document.getElementById("searchbookid").addEventListener("click", async function (e){
+            e.preventDefault();
+            let searchedId = document.getElementById("searchedId");
+            let searchId = new FormData(searchedId);
+
+            const ret = await BookById(searchId)
+
+            if(ret.status == false){
+                alert(ret.message)
+            } else {
+                document.getElementById("bookId").disabled = true;
+                document.getElementById("searchbookid").disabled = true;
+                showBook(ret.bookid, ret.booktitle, ret.bookdesc, ret.bookqty, ret.bookprice)
+            }
+        })
+
+        function showBook(bookid, booktitle, bookdesc, bookqty, bookprice){
+            document.getElementById("validationCustom01 title").disabled = false;
+            document.getElementById("validationCustom02 desc").disabled = false;
+            document.getElementById("qty").disabled = false;
+            document.getElementById("update-book").disabled = false;
+            document.getElementById("price").disabled = false;
+            document.getElementById("bookid").value = bookid;
+            document.getElementById("validationCustom01 title").value = booktitle;
+            document.getElementById("validationCustom02 desc").value = bookdesc;
+            document.getElementById("qty").value = bookqty;
+            document.getElementById("price").value = bookprice
+        }
+
+        async function UpdateBook(Book){
+            const response = await fetch("../Admin/UpdateBook",
+                {
+                    method: "POST",
+                    body: Book
+                }
+            )
+            const data = await response.json();
+            return data;
+        }
+
+        document.getElementById("update-book").addEventListener("click", async function (e){
+            e.preventDefault();
+            let form = document.getElementById("updateForm");
+            let formData = new FormData(form);
+
+            const ret = await UpdateBook(formData);
+
+            alert(ret.message)
+            document.getElementById("bookId").disabled = false;
+            document.getElementById("searchbookid").disabled = false;
+            document.getElementById("bookId").value = "";
+            document.getElementById("price").disabled = true
+            document.getElementById("validationCustom01 title").disabled = true;
+            document.getElementById("validationCustom02 desc").disabled = true;
+            document.getElementById("qty").disabled = true;
+            document.getElementById("update-book").disabled = true;
+            document.getElementById("bookid").value = "";
+            document.getElementById("validationCustom01 title").value = "";
+            document.getElementById("validationCustom02 desc").value = "";
+            document.getElementById("qty").value = "";
+            document.getElementById("price").value = "";
+            loadBookList();
+        })
+
+        async function AddBook(UserData) {
+
+            const response = await fetch("../Admin/AddBook",
+                {
+                    method: "POST",
+                    body: UserData
+                }
+            );
+            const data = await response.json();
+            return data;
+        }
+
+        document.getElementById("submit-book").addEventListener("click", async function (e) {
+
+            e.preventDefault();
+           
+            let myForm = document.getElementById('login-form');
+            let formData = new FormData(myForm);
+            const ret = await AddBook(formData);
+
+            if (ret.status == false) {
+                alert(ret.message)
+            } else {
+                alert(ret.message)
+                location.reload();
+            }
+        });
+        async function deleteBook(bookId) {
+            await query_deleteBook(bookId);
+            alert("Book Deleted");
+            loadBookList();
+        }
+
+        async function query_deleteBook(bookId) {
+            const response = await fetch("../Admin/RemoveBook?bookId=" + bookId, {
+                method: "POST"
+            });
+            const data = await response.json();
+            return data;
+        }
+
+        async function query_getBook() {
+            const response = await fetch("../Admin/GetAllBook", {
+                method: "POST"
+            });
+            const data = await response.text();
+            return data;
+        }
+
+        async function loadBookList() {
+
+            const data = await query_getBook();
+            document.getElementById("remove").innerHTML = data;
+        }
+
+        $(document).ready(function () {
+                $(".minus").click(function () {
+                    var $input = $(this).parent().find("input");
+                    var count = parseInt($input.val()) - 1;
+                    count = count < 1 ? 1 : count;
+                    $input.val(count);
+                    $input.change();
+                    return false;
+                });
+                $(".plus").click(function () {
+                    var $input = $(this).parent().find("input");
+                    $input.val(parseInt($input.val()) + 1);
+                    $input.change();
+                    return false;
+                });
+            });
+            (() => {
+                "use strict";
+
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                const forms = document.querySelectorAll(".needs-validation");
+
+                // Loop over them and prevent submission
+                Array.from(forms).forEach((form) => {
+                    form.addEventListener(
+                        "submit",
+                        (event) => {
+                            if (!form.checkValidity()) {
+                                event.preventDefault();
+                                event.stopPropagation();
+                            }
+
+                            form.classList.add("was-validated");
+                        },
+                        false
+                    );
+                });
+            })();
+            loadBookList();
+    </script>
+
+}

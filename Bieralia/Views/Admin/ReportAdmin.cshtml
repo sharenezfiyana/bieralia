@@ -1,0 +1,77 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Bieralia.ViewModels
+@model TransactionListViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+    if(Context.Session.GetString("Username") == null)
+    {
+        Layout = "_Layout";
+    }
+    else
+    {
+        Layout = "_LayoutAdmin";
+    }
+}
+<br />
+<section class="reports">
+    <div class="container">
+
+        <div class="row">
+            @foreach(var tl in Model.TransactionList)
+            {
+                <div class="col-sm-6 mb-4">
+                <div class="card text-left reports-admin">
+                    <div class="card-header">User ID: @tl.Transaction.UserID</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Transaction ID: @tl.Transaction.TransactionID</h5>
+                        @{int total = 0;}
+                            @foreach(var t in @tl.TransactionDetailList)
+                            {
+                                total = total + (t.Book.Price * t.TransactionDetail.Quantity);
+                            }
+                            <p class="card-text">Total: Rp. @total</p>
+                            @if(tl.Transaction.Status == "Unpaid")
+                            {
+                                <a onclick="acceptPayment('@tl.Transaction.TransactionID')" id="@tl.Transaction.TransactionID" class="btn btn-color-report">Accept Payment</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-color-report disabled" aria-disabled="true">Payment Accepted</a>
+                            }
+                        </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</section>
+
+@section scripts{
+    <script>
+
+        async function acceptPayment_query(transactionID){
+            console.log(transactionID)
+            const response = await fetch("../Admin/AcceptPayment?TransactionID=" + transactionID,
+                {
+                    method: "POST"
+                }
+            )
+            const data = await response.json();
+            return data;
+
+        }
+
+        async function acceptPayment(transactionID){
+
+            console.log(transactionID);
+            const ret = await acceptPayment_query(transactionID);
+            alert("Payment Accepted");
+            document.getElementById(transactionID).setAttribute("aria-disabled", "true");
+            document.getElementById(transactionID).classList.add("disabled");
+            document.getElementById(transactionID).innerText = 'Payment Accepted'
+        }
+    </script>
+}
